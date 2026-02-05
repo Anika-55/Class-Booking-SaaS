@@ -39,7 +39,13 @@ export async function completeOnboarding(
 
     const { location, searchRadius } = preferences;
 
-    if (!location || !location.lat || !location.lng || !location.address) {
+    // ✅ Allow 0 coordinates, only block undefined/null
+    if (
+      !location ||
+      location.lat === undefined ||
+      location.lng === undefined ||
+      !location.address
+    ) {
       return { success: false, error: "Location is required" };
     }
 
@@ -47,10 +53,8 @@ export async function completeOnboarding(
       return { success: false, error: "Search radius is required" };
     }
 
-    // Get or create user profile
     const userProfileId = await getOrCreateUserProfile(userId);
 
-    // Update Sanity profile with location preferences
     await writeClient
       .patch(userProfileId)
       .set({
@@ -63,7 +67,6 @@ export async function completeOnboarding(
       })
       .commit();
 
-    // Update Clerk metadata to mark onboarding as complete
     const clerk = await clerkClient();
     await clerk.users.updateUserMetadata(userId, {
       publicMetadata: {
@@ -95,7 +98,13 @@ export async function updateLocationPreferences(
 
     const { location, searchRadius } = preferences;
 
-    if (!location || !location.lat || !location.lng || !location.address) {
+    // ✅ Same fix here
+    if (
+      !location ||
+      location.lat === undefined ||
+      location.lng === undefined ||
+      !location.address
+    ) {
       return { success: false, error: "Location is required" };
     }
 
@@ -103,19 +112,15 @@ export async function updateLocationPreferences(
       return { success: false, error: "Search radius is required" };
     }
 
-    // Get user profile
     const userProfile = await client.fetch(
       USER_PROFILE_WITH_PREFERENCES_QUERY,
-      {
-        clerkId: userId,
-      }
+      { clerkId: userId }
     );
 
     if (!userProfile) {
       return { success: false, error: "User profile not found" };
     }
 
-    // Update Sanity profile
     await writeClient
       .patch(userProfile._id)
       .set({
