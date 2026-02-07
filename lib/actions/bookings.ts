@@ -7,7 +7,7 @@ import { writeClient } from "@/sanity/lib/writeClient";
 import {
   getUserTier,
   canAccessClass,
-  getRemainingBookings,
+  getRemainingBookings,J
 } from "@/lib/subscription";
 import type { Tier } from "@/lib/subscription";
 import {
