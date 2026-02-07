@@ -1,5 +1,6 @@
 import { SignUpButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
+import { motion } from "framer-motion"
 import {
   Dumbbell,
   Heart,
@@ -30,6 +31,8 @@ import {
   FREE_TRIAL_DAYS,
   type Tier,
 } from "@/lib/constants/subscription";
+import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
+import { Spotlight } from "@/components/ui/spotlight";
 
 const categories = [
   { name: "Yoga", icon: Heart, classes: "2,400+", color: "text-rose-500" },
@@ -83,6 +86,8 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
+        <BackgroundRippleEffect />
+        <Spotlight/>
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-primary/20 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
@@ -154,38 +159,42 @@ export default function HomePage() {
       </section>
 
       {/* Categories Section */}
+    
       <section className="container mx-auto px-4 py-20 md:py-28">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Find Your Perfect Workout
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From high-intensity training to mindful movement, explore classes
-            that match your fitness goals.
-          </p>
-        </div>
+  {/* Header */}
+  <div className="text-center mb-16">
+    <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+      Find Your Perfect Workout
+    </h2>
+    <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+      From high-intensity training to mindful movement, explore expertly
+      designed classes that align with your fitness goals.
+    </p>
+  </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {categories.map((category) => (
-            <Card
-              key={category.name}
-              className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-primary/50 hover:-translate-y-1"
-            >
-              <CardContent className="p-6 text-center">
-                <div
-                  className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-muted mb-4 group-hover:scale-110 transition-transform duration-300 ${category.color}`}
-                >
-                  <category.icon className="w-7 h-7" />
-                </div>
-                <h3 className="font-semibold text-lg mb-1">{category.name}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {category.classes} classes
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+  {/* Grid */}
+  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+    {categories.map((category) => (
+      <Card
+        key={category.name}
+        className="group cursor-pointer border border-border/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary/40"
+      >
+        <CardContent className="p-6 text-center">
+          <div
+            className={`w-14 h-14 mx-auto mb-4 rounded-2xl bg-muted flex items-center justify-center group-hover:scale-105 transition-transform duration-300 ${category.color}`}
+          >
+            <category.icon className="w-7 h-7" />
+          </div>
+
+          <h3 className="font-semibold text-base mb-1">{category.name}</h3>
+          <p className="text-sm text-muted-foreground">{category.classes} classes</p>
+        </CardContent>
+      </Card>
+    ))}
+  </div>
+</section>
+
+
 
       {/* How It Works Section */}
       <section className="bg-muted/30 py-20 md:py-28">
