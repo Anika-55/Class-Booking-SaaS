@@ -155,6 +155,8 @@ export default async function ClassesPage({ searchParams }: PageProps) {
   const groupedArray = Array.from(groupedByDay.entries());
 
   //* Extract venues for map display**
+  //todo: i have to add it after buy it ....
+
   
 //   const venuesForMap = sessionsWithDistance
 //     .filter((s) => s.venue !== null)
